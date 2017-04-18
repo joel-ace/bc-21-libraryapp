@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/joel-ace/libraryapp/issues"
   },
-  "homepage": "https://github.com/joel-ace/libraryapp#readme"
+  "homepage": "https://github.com/joel-ace/libraryapp#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
