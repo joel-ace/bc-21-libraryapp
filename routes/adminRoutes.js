@@ -2,15 +2,15 @@ var express = require("express");
 var adminRouter = express.Router();
 var mongojs = require("mongojs");
 var logic = require("../functions");
-var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library", ["books"]);
+var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library", ["books", "categories"]);
 
 
 
 adminRouter.route("/").get(function(request, response){
     if(logic.isLoggedIn()){
-        response.render("addBook.html");
+        response.render("addBook.ejs");
     } else {
-        response.render("login.html");
+        response.render("login.ejs");
     }
 });
 
@@ -28,7 +28,7 @@ adminRouter.route("/add-book").post(function(request, response){
             if(err){
                 response.send(err);
             }
-            response.json(task);
+            response.json(book);
         })
     }
 });
@@ -68,5 +68,24 @@ adminRouter.route("/update/:id").put(function(request, response){
     }
 
 });
+
+// Add Category
+adminRouter.route("/add-category").post(function(request, response){
+    var category = request.body;
+    if(!category.title){
+        response.status(400);
+        response.json({
+            "error": "Enter Category title"
+        })
+    } else {
+        db.categories.save(category, function(err, category){
+            if(err){
+                response.send(err);
+            }
+            response.json(category);
+        })
+    }
+});
+
 
 module.exports = adminRouter;
