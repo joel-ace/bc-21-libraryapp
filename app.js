@@ -7,8 +7,6 @@ var bodyParser = require("body-parser");
 var app = express();
 var port = 4000;
 
-
-
 var index = require("./routes/index");
 var books = require("./routes/bookRoutes");
 var adminRoute = require("./routes/adminRoutes");
