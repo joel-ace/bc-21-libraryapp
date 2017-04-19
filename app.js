@@ -11,6 +11,10 @@ app.get("/", function (request, response) {
   response.send('test Pages')
 })
 
+app.get("/login", function (request, response) {
+  response.send('test Pages')
+})
+
 app.listen(port, function () {
   console.log('App running')
 })
