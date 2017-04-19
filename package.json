@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/joel-ace/libraryapp#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "ejs": "^2.5.6",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "mongojs": "^2.4.0"
   }
 }

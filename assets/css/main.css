@@ -16,12 +16,12 @@ img {
 }
 
 a {
-    color: #dc0000;
+    color: #009EDF;
     text-decoration: none;
 }
 
 a:hover {
-    color: #666;
+    color: #dc0000;
     text-decoration: underline;
 }
 h3 a {
@@ -60,6 +60,10 @@ hr.e6 {
     border-width: 1px 0px 0px;
     border-style: solid none none;
     border-color: #e6e6e6 -moz-use-text-color -moz-use-text-color;
+}
+
+.p20 {
+    padding: 20px;
 }
 
 .headertop, #footer {
