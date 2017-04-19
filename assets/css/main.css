@@ -112,6 +112,11 @@ hr.e6 {
     text-decoration: none;
 }
 
+.content {
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
 #footer {
     text-align: center;
     border-top: 3px solid #009EDF;
