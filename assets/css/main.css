@@ -117,6 +117,18 @@ hr.e6 {
     padding-bottom: 2em;
 }
 
+a.books {
+    background: #009EDF;
+    color: #fff;
+    padding: 1em;
+    margin: 1em;
+    display: block;
+}
+a.books:hover {
+    background: #a01;
+    text-decoration: none;
+}
+
 #footer {
     text-align: center;
     border-top: 3px solid #009EDF;

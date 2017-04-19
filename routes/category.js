@@ -19,7 +19,7 @@ categoryRouter.route("/:id").get(function(request, response){
         if(error){
         // response.render("error.html");
         }
-        response.render("singleBook.ejs", {category: category});
+        response.render("singleCategory.ejs", {category: category});
     })
 });
 

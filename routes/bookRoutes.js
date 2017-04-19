@@ -16,12 +16,12 @@ bookRouter.route("/").get(function(request, response){
 // For single Book
 bookRouter.route("/:id").get(function(request, response){
     db.books.findOne({_id: mongojs.ObjectId(request.params.id)} , function(error, book){
-        console.log(book.available);
         if(error){
         // response.render("error.html");
         }
         response.render("singleBook.ejs", {book: book});
     })
+
 });
 
 module.exports = bookRouter;

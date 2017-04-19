@@ -8,11 +8,22 @@
     <div class="row content">
       <% books.forEach(function (arrayItem){ %>
       <div class="col-md-3">
-        <h3><strong>Author:</strong> <%= books.author %></h3>
-        <h3><strong>Rental Fee:</strong> <%= books.fee %></h3>
-        <h3><strong>Category:</strong> <%= books.category %></h3>
+        <a class="books" href="/books/<%= arrayItem._id %>">
+          <h3><strong>Title:</strong> <%= arrayItem.title %></h3>
+          <h3><strong>Author:</strong> <%= arrayItem.author %></h3>
+          <h3><strong>Rental Fee:</strong> <%= arrayItem.fee %></h3>
+          <h3><strong>Category:</strong> <%= arrayItem.category %></h3>
+          <p>
+            <!--<% if(arrayItem.available == true) { %>
+              <span class="label label-success">Available</span>
+            <% } else { %>  
+              <span class="label label-danger">Unavailable</span>
+            <% } %>-->
+          </p>
+        </a>
       </div>
       <% }) %>
+      <div class="clearfix"></div>
 
 
     </div>

@@ -18,7 +18,7 @@ adminRouter.route("/").get(function(request, response){
 // Add Book
 adminRouter.route("/add-book").post(function(request, response){
     var book = request.body;
-    if(!book.title || book.available){
+    if(!book.title || !book.available){
         response.status(400);
         response.json({
             "error": "Enter Book title and availability status"
