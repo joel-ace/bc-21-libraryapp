@@ -11,7 +11,7 @@ var port = 4000;
 
 var index = require("./routes/index");
 var books = require("./routes/bookRoutes");
-var login = require("./routes/login");
+var adminRoute = require("./routes/adminRoutes");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Routing
 app.use("/", index);
 app.use("/books", books);
-app.use("/login", login);
+app.use("/admin", adminRoute);
 
 app.listen(port, function () {
   console.log('App running')
