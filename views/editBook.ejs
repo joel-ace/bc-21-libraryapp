@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <select name="category" class="form-control" id="category">
                         <% categories.forEach(function (category){%>
-                            <option <%= (category._id == book._category) ? 'selected="selected"' : "" %> 
+                            <option <%= (category._id == book.category) ? 'selected="selected"' : "" %> 
                                 value="<%= category._id %>"><%= category.title %></option>
                         <% }) %>
                         </select>

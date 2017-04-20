@@ -23,12 +23,19 @@ apiRouter.route("/add-book").post(function(request, response){
 
 // Delete Book
 apiRouter.route("/delete-book/:id").delete(function(request, response){
-    db.books.remove({_id: mongojs.ObjectId(request.params.id)} , function(error, book){
-        if(error){
-        // response.render("error.html");
-        }
-        response.json(book);
-    })
+    if(request.params.id){
+        db.books.remove({_id: mongojs.ObjectId(request.params.id)} , function(error, book){
+            if(error){
+            // response.render("error.html");
+            }
+            response.send(request.params.id);
+        })
+    } else {
+        response.json({
+            "error": "This book does not exist"
+        })
+    }
+    
 });
 
 // Update books
@@ -47,8 +54,7 @@ apiRouter.route("/update-book/:id").put(function(request, response){
             if(error){
             // response.render("error.html");
         }
-        console.log(Book);
-            response.send(request.params.id);
+        response.send(request.params.id);
         })
     } else {
         response.json({

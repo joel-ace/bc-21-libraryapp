@@ -6,20 +6,32 @@
                 <h1>Manage Books</h1>
                 <hr />
                 <div id="alertWrap"></div>
-                <table class="table table-condensed" cellspacing="0" cellpadding="7" width="100%" border="0">
+                <table class="table table-condensed manageBooks" cellspacing="0" cellpadding="7" width="100%" border="0">
                     <tbody>
                         <tr>
                             <td><strong>Book Title</strong></td>
                             <td><strong>Author</strong></td>
                             <td><strong>Category</strong></td>
                             <td><strong>Availability</strong></td>
+                            <td></td>
                         </tr>
                         <% books.forEach(function (bookDetails){ %>
-                        <tr>
+                        <tr id="<%= bookDetails._id %>">
                             <td><a href="/admin/book/<%= bookDetails._id %>"> <%= bookDetails.title %><a/></td>
                             <td><%= bookDetails.author %></td>
                             <td><%= bookDetails.category %></td>
-                            <td><%= bookDetails.availability %></td>
+                            <td>
+                                <% if(bookDetails.available == 1){ %>
+                                    <span class="label label-success">Available</span>
+                                <% } else{ %>
+                                    <span class="label label-danger">Unavailable</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <form id="deleteBook" data-id="<%= bookDetails._id %>">
+                                    <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                                </form>
+                            </td>
                         </tr>
                         <% }) %>
                     </tbody>
