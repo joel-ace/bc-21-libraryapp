@@ -41,5 +41,14 @@ adminRouter.route("/add-category").get(function(request, response){
     }
 });
 
+// Manage Books
+adminRouter.route("/manage-books").get(function(request, response){
+    if(logic.isLoggedIn()){
+        response.render("manageBooks.ejs");
+    } else {
+        response.render("login.ejs");
+    }
+});
+
 
 module.exports = adminRouter;
