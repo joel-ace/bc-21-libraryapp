@@ -9,7 +9,7 @@ bookRouter.route("/").get(function(request, response){
         if(error){
         // response.render("error.html");
         }
-        response.render("books.ejs", {books: books});
+        response.render("books.ejs", {books: books.reverse()});
     })
 });
 

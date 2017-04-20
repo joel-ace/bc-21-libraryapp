@@ -16,8 +16,13 @@ adminRouter.route("/").get(function(request, response){
 
 // Add Book
 adminRouter.route("/add-book").get(function(request, response){
+
     if(logic.isLoggedIn()){
-        response.render("addBook.ejs");
+        db.categories.find(function(error, categories){
+            if(!error){
+                response.render("addBook.ejs", {categories: categories});
+            }
+        })
     } else {
         response.render("login.ejs");
     }
@@ -28,7 +33,11 @@ adminRouter.route("/book/:id").get(function(request, response){
     if(logic.isLoggedIn()){
         db.books.findOne({_id: mongojs.ObjectId(request.params.id)}, function(error, book){
             if(!error && book){
-                response.render("editBook.ejs", {book: book});
+                db.categories.find(function(error, categories){
+                    if(!error){
+                        response.render("editBook.ejs", {book: book, categories: categories});
+                    }
+                })                
             } else {
 
             }
@@ -52,7 +61,7 @@ adminRouter.route("/manage-books").get(function(request, response){
     if(logic.isLoggedIn()){
         db.books.find(function(error, books){
             if(!error){
-                response.render("manageBooks.ejs", {books: books});
+                response.render("manageBooks.ejs", {books: books.reverse()});
             }
         })
     } else {

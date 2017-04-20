@@ -13,7 +13,11 @@
                     </div>
                     <p>Category</p>
                     <div class="form-group">
-                        <input name="category" id="category" type="text" class="form-control">
+                        <select name="category" class="form-control" id="category">
+                        <% categories.forEach(function (category){%>
+                            <option value="<%= category._id %>"><%= category.title %></option>
+                        <% }) %>
+                        </select>
                     </div>
                     <p>Synopsis</p>
                     <div class="form-group">
@@ -30,7 +34,7 @@
                             <option value="0">Unavailable</option>
                         </select>
                     </div>
-                    <input type="submit" class="btn btn-sm btn-primary" value="Login">
+                    <input type="submit" class="btn btn-sm btn-primary" value="Add Book">
                 </form>
             </div>
             <div class="col-md-3">
