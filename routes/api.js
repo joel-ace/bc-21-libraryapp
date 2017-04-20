@@ -40,18 +40,19 @@ apiRouter.route("/update-book/:id").put(function(request, response){
         updateBook.title = book.title,
         updateBook.category = book.category,
         updateBook.author = book.author,
+        updateBook.synopsis = book.synopsis,
         updateBook.available = book.available
 
-        db.books.update({_id: mongojs.ObjectId(request.params.id)}, updateBook, {}, function(error, book){
+        db.books.update({_id: mongojs.ObjectId(request.params.id)}, updateBook, {}, function(error, Book){
             if(error){
             // response.render("error.html");
-            }
-            response.json(book);
+        }
+        console.log(Book);
+            response.send(request.params.id);
         })
     } else {
-        response.status(400);
         response.json({
-            "error": "Bad Data"
+            "error": "This book does not exist"
         })
     }
 

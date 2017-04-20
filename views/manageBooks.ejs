@@ -4,6 +4,7 @@
         <div class="p20">
             <div class="col-md-9">
                 <h1>Manage Books</h1>
+                <hr />
                 <div id="alertWrap"></div>
                 <table class="table table-condensed" cellspacing="0" cellpadding="7" width="100%" border="0">
                     <tbody>
@@ -13,13 +14,14 @@
                             <td><strong>Category</strong></td>
                             <td><strong>Availability</strong></td>
                         </tr>
+                        <% books.forEach(function (bookDetails){ %>
                         <tr>
-                            <td>Title</td>
-                            <td>Hencon Nig Ltd / NNLG</td>
-                            <td>Yenagoa – Bayelsa</td>
-                            <td>Excavator 320BL</td>
+                            <td><a href="/admin/book/<%= bookDetails._id %>"> <%= bookDetails.title %><a/></td>
+                            <td><%= bookDetails.author %></td>
+                            <td><%= bookDetails.category %></td>
+                            <td><%= bookDetails.availability %></td>
                         </tr>
-                        <tr>
+                        <% }) %>
                     </tbody>
                 </table>
             </div>

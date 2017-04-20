@@ -7,6 +7,11 @@ $(document).ready(function(){
     var addCategory = $("form#add-category");
     sendRequest("/api/add-category", addCategory, "POST");
 
+    // Edit Post
+    var editBook = $("form#edit-book");
+    var editID = editBook.data("id");
+    sendRequest("/api/update-book/"+editID, editBook, "PUT");
+
     function formToJson(formData){
         var formObject = formData.serializeArray();
         var newFormObj = {};

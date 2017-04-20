@@ -23,10 +23,16 @@ adminRouter.route("/add-book").get(function(request, response){
     }
 });
 
-// Update books
+// Update book
 adminRouter.route("/book/:id").get(function(request, response){
     if(logic.isLoggedIn()){
-        response.render("addBook.ejs");
+        db.books.findOne({_id: mongojs.ObjectId(request.params.id)}, function(error, book){
+            if(!error && book){
+                response.render("editBook.ejs", {book: book});
+            } else {
+
+            }
+        })
     } else {
         response.render("login.ejs");
     }
@@ -42,13 +48,16 @@ adminRouter.route("/add-category").get(function(request, response){
 });
 
 // Manage Books
-adminRouter.route("/manage-books").get(function(request, response){
+adminRouter.route("/manage-books").get(function(request, response){    
     if(logic.isLoggedIn()){
-        response.render("manageBooks.ejs");
+        db.books.find(function(error, books){
+            if(!error){
+                response.render("manageBooks.ejs", {books: books});
+            }
+        })
     } else {
         response.render("login.ejs");
     }
 });
-
 
 module.exports = adminRouter;
