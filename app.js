@@ -11,6 +11,7 @@ var index = require("./routes/index");
 var books = require("./routes/bookRoutes");
 var adminRoute = require("./routes/adminRoutes");
 var category = require("./routes/category");
+var api = require("./routes/api");
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -28,6 +29,7 @@ app.use("/", index);
 app.use("/books", books);
 app.use("/admin", adminRoute);
 app.use("/category", category);
+app.use("/api", api);
 
 app.listen(port, function () {
   console.log('App running')

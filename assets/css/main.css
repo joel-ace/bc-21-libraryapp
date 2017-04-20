@@ -117,16 +117,20 @@ hr.e6 {
     padding-bottom: 2em;
 }
 
-a.books {
+.books {
     background: #009EDF;
     color: #fff;
     padding: 1em;
     margin: 1em;
     display: block;
 }
-a.books:hover {
-    background: #a01;
-    text-decoration: none;
+.books .btn-info {
+    background: #000;
+    border-color: #000;
+}
+.books .btn-success {
+    background: #B6BF00;
+    border-color: #B6BF00000;
 }
 
 #footer {

@@ -21,7 +21,31 @@ bookRouter.route("/:id").get(function(request, response){
         }
         response.render("singleBook.ejs", {book: book});
     })
+});
+
+// Borrow book
+bookRouter.route("/borrow-book/:id").put(function(request, response){
+    // var book = request.body;
+    // var borrowBook = {};
+
+    // if(book.title && book.available){
+
+    //     db.books.update({_id: mongojs.ObjectId(request.params.id)}, borrowBook, {}, function(error, book){
+    //         if(error){
+    //         // response.render("error.html");
+    //         }
+    //         response.json(book);
+    //     })
+    // } else {
+    //     response.status(400);
+    //     response.json({
+    //         "error": "Bad Data"
+    //     })
+    // }
 
 });
+
+
+
 
 module.exports = bookRouter;

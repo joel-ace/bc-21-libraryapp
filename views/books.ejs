@@ -7,8 +7,8 @@
   <div class="container">
     <div class="row content">
       <% books.forEach(function (arrayItem){ %>
-      <div class="col-md-3">
-        <a class="books" href="/books/<%= arrayItem._id %>">
+      <div class="col-md-4">
+        <div class="books">
           <h3><strong>Title:</strong> <%= arrayItem.title %></h3>
           <h3><strong>Author:</strong> <%= arrayItem.author %></h3>
           <h3><strong>Rental Fee:</strong> <%= arrayItem.fee %></h3>
@@ -20,7 +20,10 @@
               <span class="label label-danger">Unavailable</span>
             <% } %>-->
           </p>
-        </a>
+          <a class="btn btn-info pull-left" href="/books/<%= arrayItem._id %>">More</a>
+          <button href="#" class="btn btn-success pull-right">Borrow</button>
+          <div class="clearfix"></div>
+        </div>
       </div>
       <% }) %>
       <div class="clearfix"></div>

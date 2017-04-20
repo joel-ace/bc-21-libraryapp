@@ -1,7 +1,7 @@
 var express = require("express");
 var categoryRouter = express.Router();
 var mongojs = require("mongojs");
-var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library", ["categories"]);
+var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library", ["categories", "books"]);
 
 
 categoryRouter.route("/").get(function(request, response){
@@ -13,14 +13,14 @@ categoryRouter.route("/").get(function(request, response){
     })
 });
 
-// For single Book
 categoryRouter.route("/:id").get(function(request, response){
-    db.books.findOne({_id: mongojs.ObjectId(request.params.id)} , function(error, category){
+    db.books.find({category: request.params.id}, function(error, categories){
         if(error){
         // response.render("error.html");
         }
-        response.render("singleCategory.ejs", {category: category});
+        response.json(categories);
     })
 });
+
 
 module.exports = categoryRouter;
