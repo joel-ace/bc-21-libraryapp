@@ -13,15 +13,10 @@
           <h3><strong>Author:</strong> <%= arrayItem.author %></h3>
           <h3><strong>Rental Fee:</strong> <%= arrayItem.fee %></h3>
           <h3><strong>Category:</strong> <%= arrayItem.category %></h3>
-          <p>
-            <!--<% if(arrayItem.available == true) { %>
-              <span class="label label-success">Available</span>
-            <% } else { %>  
-              <span class="label label-danger">Unavailable</span>
-            <% } %>-->
-          </p>
           <a class="btn btn-info pull-left" href="/books/<%= arrayItem._id %>">More</a>
+          <% if(arrayItem.available == 1) { %>
           <button href="#" class="btn btn-success pull-right">Borrow</button>
+            <% } %>
           <div class="clearfix"></div>
         </div>
       </div>
