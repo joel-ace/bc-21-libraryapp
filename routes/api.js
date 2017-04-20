@@ -7,8 +7,7 @@ var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library",
 // Add Book
 apiRouter.route("/add-book").post(function(request, response){
     var book = request.body;
-    if(!book.title || !book.available){
-        response.status(400);
+    if(!book.title){
         response.json({
             "error": "Enter Book title and availability status"
         })
@@ -17,7 +16,7 @@ apiRouter.route("/add-book").post(function(request, response){
             if(err){
                 response.send(err);
             }
-            response.json(book);
+            response.send(book._id);
         })
     }
 });
@@ -62,7 +61,6 @@ apiRouter.route("/update-book/:id").put(function(request, response){
 apiRouter.route("/add-category").post(function(request, response){
     var category = request.body;
     if(!category.title){
-        response.status(400);
         response.json({
             "error": "Enter Category title"
         })
@@ -71,7 +69,7 @@ apiRouter.route("/add-category").post(function(request, response){
             if(err){
                 response.send(err);
             }
-            response.json(category);
+            response.send(category._id);
         })
     }
 });

@@ -34,7 +34,11 @@ adminRouter.route("/book/:id").get(function(request, response){
 
 // Add Category
 adminRouter.route("/add-category").get(function(request, response){
-
+    if(logic.isLoggedIn()){
+        response.render("addCategory.ejs");
+    } else {
+        response.render("login.ejs");
+    }
 });
 
 
