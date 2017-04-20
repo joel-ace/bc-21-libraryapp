@@ -5,15 +5,30 @@
             <div class="col-sm-3 col-md-3"></div>
             <div class="col-sm-6 col-md-6">
                 <h1>Add a Book</h1>
-                <form name="login" action="" method="post">
+                <form id="add-book" name="login"  action="" method="post">
                     <p>Title</p>
-                    <input name="title" id="title" type="text" class="form-control">
+                    <div class="form-group">
+                        <input name="title" id="title" type="text" class="form-control">
+                    </div>
                     <p>Category</p>
-                    <input name="category" id="category" type="text" class="form-control">
+                    <div class="form-group">
+                        <input name="category" id="category" type="text" class="form-control">
+                    </div>
                     <p>Synopsis</p>
-                    <textarea name="synopsis" id="synopsis" type="textarea" class="form-control"></textarea>
+                    <div class="form-group">
+                        <textarea name="synopsis" id="synopsis" row="5" class="form-control"></textarea>
+                    </div>
                     <p>Author</p>
-                    <input name="author" id="author" type="text" class="form-control"><br>
+                    <div class="form-group">
+                        <input name="author" id="author" type="text" class="form-control">
+                    </div>
+                    <p>Availability Status</p>
+                    <div class="form-group">
+                        <select class="form-control" id="available">
+                            <option value="true">Available</option>
+                            <option value="false">Unavailable</option>
+                        </select>
+                    </div>
                     <input type="submit" class="btn btn-sm btn-primary" value="Login">
                 </form>
             </div>
