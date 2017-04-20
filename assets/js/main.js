@@ -17,6 +17,31 @@ $(document).ready(function(){
     var deleteID = deleteBook.data("id");
     sendRequest("/api/delete-book/"+deleteID, deleteBook, "DELETE");
 
+    // Borrow Book
+    var borrowBtn = $(".borrow");
+    borrowBtn.click(function(e){
+    	e.preventDefault();
+    	$this = $(this);
+        var bookID = $this.data("id");
+        url = "/api/borrow-book/"+bookID;
+
+        $.ajax({
+            type: "PUT",
+            url: url,
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            success: function(msg) {
+                if(msg.length > 5 && msg == bookID){
+                    $this.fadeOut("slow", function(){
+                        $this.remove();
+                    });
+                }
+            }
+        });
+    });
+
+
+
     function formToJson(formData){
         var formObject = formData.serializeArray();
         var newFormObj = {};
