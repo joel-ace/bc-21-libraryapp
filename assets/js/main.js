@@ -82,7 +82,34 @@ $(document).ready(function(){
             contentType: "application/json; charset=utf-8",
             success: function(msg) {
                 if(msg.success == true){
-                    alertWrapper.show();
+                    window.location = msg.url;
+                } else {
+                    console.log(msg.message);
+                }
+            }
+        });
+    });
+
+    // Register
+    var registerBtn = $("form#register");
+    registerBtn.submit(function(e){
+    	e.preventDefault();
+
+    	$this = $(this);
+        var alertWrapper = $("#fontAwesomeSpinner");
+        alertWrapper.removeClass("hide").addClass("show");
+
+        var data = formToJson($this);
+        url = "/api/add-user";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            success: function(msg) {
+                alertWrapper.removeClass("show").addClass("hide");
+                if(msg.success == true){
                     window.location = msg.url;
                 } else {
                     console.log(msg.message);

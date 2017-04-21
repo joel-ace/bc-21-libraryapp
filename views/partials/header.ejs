@@ -24,7 +24,7 @@
         <div class="pull-right">
           <% if(!Sess.SSuser){ %>
           <a href="/login">Login</a>
-          <a href="/register">Register</a>
+          <a href="/login/register">Register</a>
           <% } %>
           <% if(Sess.SSuser && Sess.SSaccount == "adminAccount"){ %>
           <a href="/admin/manage-books">Manage Books</a>

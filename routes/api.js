@@ -17,9 +17,6 @@ apiRouter.route("/authenticate").post(function(request, response){
             } else if(User.password != request.body.password) {
                 response.json({success: false, message: "This password is incorrect."})
             } else {
-                // var token = jsonwebtoken.sign(User, secret, {
-                //     expiresIn: "2d"
-                // });
                 request.session.user = User._id;
                 request.session.name = User.name;
                 request.session.account = User.admin;
@@ -34,126 +31,123 @@ apiRouter.route("/authenticate").post(function(request, response){
                     url: url
                 });                
             }
-
-            // db.users.update({_id: mongojs.ObjectId(User._id)}, 
-            //         {$set: {token: token}}, {}, function(error, authenticated){
-            //     if(!error){
-            //         response.json({
-            //             success: true, message: "Login Successful! You will be redirected soon"
-            //         });                
-            //     }
-            // })
-
-            // console.log(request.session.user);
-            // console.log(request.session);
         }
     });
 
 });
 
-
-// apiRouter.use(function(request, response, next) {
-
-//   // check header or url parameters or post parameters for token
-//   var token = request.body.token || request.query.token || request.headers["x-access-token"];
-
-//   if(token) {
-//     jsonwebtoken.verify(token, secret, function(err, decoded) {      
-//       if(err) {
-//         return response.json({ success: false, message: "We couldn't aauthenticate token" });    
-//       } else {
-//         request.decoded = decoded;    
-//         next();
-//       }
-//     });
-//   } else {
-//     return ressponse.status(403).send({ 
-//         success: false, 
-//         message: "No token sent" 
-//     });
-//   }
-// });
-
+// Add User
+apiRouter.route("/add-user").post(function(request, response){
+    var user = request.body;
+    if(!user.email || !user.password || !user.name){
+        response.json({
+            success: false, 
+            message: "Your Name, Email and Password is required",
+        })
+    } else {
+        db.users.save(user, function(err, User){
+            if(err){
+                response.json({
+                    success: false, 
+                    message: "Seems there's a glitch, Please try again later",
+                });    
+            } else {
+                response.json({
+                    success: true, 
+                    message: "Registration Successful! You will be redirected soon",
+                    url: "/login"
+                });    
+            }            
+        })
+    }
+});
 
 // Add Book
 apiRouter.route("/add-book").post(function(request, response){
-    var book = request.body;
-    if(!book.title || !book.available){
-        response.json({
-            "error": "Enter Book title and availability status"
-        })
-    } else {
-        db.books.save(book, function(err, book){
-            if(err){
-                response.send(err);
-            }
-            response.send(book._id);
-        })
+    if(request.session.account == "adminAccount"){
+        var book = request.body;
+        if(!book.title || !book.available){
+            response.json({
+                "error": "Enter Book title and availability status"
+            })
+        } else {
+            db.books.save(book, function(err, book){
+                if(err){
+                    response.send(err);
+                }
+                response.send(book._id);
+            })
+        }
     }
 });
 
 // Delete Book
 apiRouter.route("/delete-book/:id").delete(function(request, response){
-    if(request.params.id){
-        db.books.remove({_id: mongojs.ObjectId(request.params.id)} , function(error, book){
-            if(error){
-            // response.render("error.html");
-            }
-            response.send(request.params.id);
-        })
-    } else {
-        response.json({
-            "error": "This book does not exist"
-        })
+    if(request.session.account == "adminAccount"){
+        if(request.params.id){
+            db.books.remove({_id: mongojs.ObjectId(request.params.id)} , function(error, book){
+                if(error){
+                // response.render("error.html");
+                }
+                response.send(request.params.id);
+            })
+        } else {
+            response.json({
+                "error": "This book does not exist"
+            })
+        }
     }
-    
 });
 
 // Update books
 apiRouter.route("/update-book/:id").put(function(request, response){
-    var book = request.body;
-    var updateBook = {};
+    if(request.session.account == "adminAccount"){
+        var book = request.body;
+        var updateBook = {};
 
-    if(book){
-        updateBook.title = book.title,
-        updateBook.category = book.category,
-        updateBook.author = book.author,
-        updateBook.synopsis = book.synopsis,
-        updateBook.available = book.available
+        if(book){
+            updateBook.title = book.title,
+            updateBook.category = book.category,
+            updateBook.author = book.author,
+            updateBook.synopsis = book.synopsis,
+            updateBook.available = book.available
 
-        db.books.update({_id: mongojs.ObjectId(request.params.id)}, 
-                {$set: 
-                    {title: book.title, category: book.category, 
-                    author: book.author, synopsis: book.synopsis, 
-                    available: book.available}
-                }, {}, function(error, Book){
-            if(error){
-            // response.render("error.html");
+            db.books.update({_id: mongojs.ObjectId(request.params.id)}, 
+                    {$set: 
+                        {title: book.title, category: book.category, 
+                        author: book.author, synopsis: book.synopsis, 
+                        available: book.available}
+                    }, {}, function(error, Book){
+                if(error){
+                // response.render("error.html");
+            }
+            response.send(request.params.id);
+            })
+        } else {
+            response.json({
+                "error": "This book does not exist"
+            })
         }
-        response.send(request.params.id);
-        })
-    } else {
-        response.json({
-            "error": "This book does not exist"
-        })
     }
 
 });
 
 // Add Category
 apiRouter.route("/add-category").post(function(request, response){
-    var category = request.body;
-    if(!category.title){
-        response.json({
-            "error": "Enter Category title"
-        })
-    } else {
-        db.categories.save(category, function(err, category){
-            if(err){
-                response.send(err);
-            }
-            response.send(category._id);
-        })
+    if(request.session.account == "adminAccount"){
+        var category = request.body;
+        if(!category.title){
+            response.json({
+                "error": "Enter Category title"
+            })
+        } else {
+            db.categories.save(category, function(err, category){
+                if(err){
+                    response.send(err);
+                }
+                response.send(category._id);
+            })
+        }
     }
 });
 
@@ -175,18 +169,20 @@ apiRouter.route("/borrow-book/:id").put(function(request, response){
 
 // Return book
 apiRouter.route("/return-book/:id").put(function(request, response){
-    var book = request.body;
-    var borrowBook = 0;
-    var now = new Date();
-    now.setDate(now.getDate()+3);
+    if(request.session.account == "adminAccount"){
+        var book = request.body;
+        var borrowBook = 0;
+        var now = new Date();
+        now.setDate(now.getDate()+3);
 
-    // borrowBook.returnDate = now;
-    db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: {borrow: borrowBook}}, {}, function(error, Book){
-        if(error){
-        // response.render("error.html");
-        }
-    });
-    response.send(request.params.id);
+        // borrowBook.returnDate = now;
+        db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: {borrow: borrowBook}}, {}, function(error, Book){
+            if(error){
+            // response.render("error.html");
+            }
+        });
+        response.send(request.params.id);
+    }
 });
 
 // Get all users

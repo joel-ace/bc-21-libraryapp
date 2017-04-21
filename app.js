@@ -45,6 +45,10 @@ app.use("/admin", isLoggedIn, adminRoute);
 app.use("/category", isLoggedIn, category);
 app.use("/api", api);
 app.use("/login", login); 
+app.get("/register", function(request, response){
+    response.render("register.ejs");
+});
+
 
 app.get("/logout",function(request,response){
     request.session.destroy(function(error){

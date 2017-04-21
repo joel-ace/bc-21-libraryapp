@@ -55,7 +55,12 @@ adminRouter.route("/book/:id").get(function(request, response){
 
 // Add Category
 adminRouter.route("/add-category").get(function(request, response){
-    response.render("addCategory.ejs");
+    var Sess = {
+        SSuser: request.session.user, 
+        SSname: request.session.name, 
+        SSaccount: request.session.account
+    }
+    response.render("addCategory.ejs", {Sess: Sess});
 });
 
 // Manage Books
