@@ -147,4 +147,7 @@ hr.e6 {
 #footer {
     text-align: center;
     border-top: 3px solid #009EDF;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
 }
