@@ -15,10 +15,11 @@ categoryRouter.route("/").get(function(request, response){
 
 categoryRouter.route("/:id").get(function(request, response){
     db.books.find({category: request.params.id}, function(error, categories){
+        var bookCategory = request.params.id;
         if(error){
         // response.render("error.html");
         }
-        response.render("books.ejs", {books: categories});
+        response.render("books.ejs", {books: categories, pgTitle: bookCategory + " Books"});
     })
 });
 
