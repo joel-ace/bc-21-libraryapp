@@ -12,11 +12,12 @@
         <div class="books">
           <h3><strong>Title:</strong> <%= arrayItem.title %></h3>
           <h3><strong>Author:</strong> <%= arrayItem.author %></h3>
-          <h3><strong>Rental Fee:</strong> <%= arrayItem.fee %></h3>
           <h3><strong>Category:</strong> <%= arrayItem.category %></h3>
           <a class="btn btn-info pull-left" href="/books/<%= arrayItem._id %>">More</a>
+          <% if(Sess.SSuser && Sess.SSaccount == "adminAccount"){ %>
           <% if(arrayItem.borrow < 1) { %>
           <button href="#" class="btn btn-success pull-right borrow" data-id="<%= arrayItem._id %>">Borrow</button>
+          <% } %>
           <% } %>
           <div class="clearfix"></div>
         </div>

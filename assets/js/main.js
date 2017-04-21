@@ -8,9 +8,20 @@ $(document).ready(function(){
     sendRequest("/api/add-category", addCategory, "POST");
 
     // Edit Book
+    // $("#category").on('change', function() {
+    //     $this = $(this);
+    //     var hiddenField = $("#catName");
+    //     var select =  $this.val();
+    //     catName = $("#category option[value=" + select +"]").text();
+    //     hiddenField.val(catName);
+    // })
     var editBook = $("form#edit-book");
     var editID = editBook.data("id");
-    sendRequest("/api/update-book/"+editID, editBook, "PUT");
+
+    // data = formToJson(editBook);
+    // data["catName"] = hiddenField;
+    // console.log(data);
+    // sendRequest("/api/update-book/"+editID, editBook, "PUT");
 
     //Delete Book
     var deleteBook = $("form#deleteBook");

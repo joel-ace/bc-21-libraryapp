@@ -29,7 +29,7 @@ categoryRouter.route("/:id").get(function(request, response){
         SSaccount: request.session.account
     }
 
-    db.books.find({category: mongojs.ObjectId(request.params.id)}, function(error, categories){
+    db.books.find({category: request.params.id}, function(error, categories){
         var bookCategory = request.params.id;
         if(!error){
             response.render("books.ejs", { 

@@ -1,5 +1,5 @@
 <%- include partials/header.ejs %>
-  <div class="container">
+  <div class="container mainCont">
     <div class="row">
         <div class="p20">
             <div class="col-md-9">
@@ -15,7 +15,7 @@
                     <div class="form-group">
                         <select name="category" class="form-control" id="category">
                         <% categories.forEach(function (category){%>
-                            <option <%= (category._id == book.category) ? 'selected="selected"' : "" %> 
+                            <option data-catName="<%= category.title %>"<%= (category._id == book.category) ? 'selected="selected"' : "" %> 
                                 value="<%= category._id %>"><%= category.title %></option>
                         <% }) %>
                         </select>
@@ -36,6 +36,7 @@
                         </select>
                     </div>
                     <input type="submit" class="btn btn-sm btn-primary" value="Update">
+                    <input type="hidden" id="catName" ="catName" value="">
                 </form>
             </div>
             <div class="col-md-3">

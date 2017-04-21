@@ -127,7 +127,9 @@ hr.e6 {
     text-decoration: none;
     color: #fff;
 }
-
+.mainCont {
+    margin-bottom: 40px;
+}
 .books {
     background: #009EDF;
     color: #fff;
