@@ -1,7 +1,10 @@
 var express = require("express");
 var apiRouter = express.Router();
 var mongojs = require("mongojs");
+var jsonwebtoken = require("jsonwebtoken");
 var logic = require("../functions");
+
+var secret = "myfirstjavascriptappever";
 var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library", ["books", "categories", "users"]);
 
 // Add Book
@@ -102,7 +105,7 @@ apiRouter.route("/borrow-book/:id").put(function(request, response){
     response.send(request.params.id);
 });
 
-// Borrow book
+// Return book
 apiRouter.route("/return-book/:id").put(function(request, response){
     var book = request.body;
     var borrowBook = 0;
@@ -117,5 +120,14 @@ apiRouter.route("/return-book/:id").put(function(request, response){
     });
     response.send(request.params.id);
 });
+
+// Get all users
+apiRouter.route("/users").get(function(request, response) {
+  db.users.find({}, function(error, users) {
+    res.json(users);
+  });
+}); 
+
+
 
 module.exports = apiRouter;
