@@ -9,7 +9,7 @@ categoryRouter.route("/").get(function(request, response){
         if(error){
         // response.render("error.html");
         }
-        response.json(categories);
+        response.render("category.ejs", {categories: categories});
     })
 });
 
