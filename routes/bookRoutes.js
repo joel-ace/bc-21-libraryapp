@@ -23,7 +23,4 @@ bookRouter.route("/:id").get(function(request, response){
     })
 });
 
-
-
-
 module.exports = bookRouter;

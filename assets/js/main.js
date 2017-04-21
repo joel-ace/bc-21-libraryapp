@@ -63,6 +63,32 @@ $(document).ready(function(){
         });
     });
 
+    // Login
+    var returnedBtn = $("form#login");
+    returnedBtn.submit(function(e){
+    	e.preventDefault();
+
+    	$this = $(this);
+        var alertWrapper = $("#alertWrap");
+        var data = formToJson($this);
+        url = "/api/authenticate";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            contentType: "application/json; charset=utf-8",
+            success: function(msg) {
+                if(msg.success == true){
+                    console.log(msg.url);
+                    window.location = msg.url;
+                } else {
+                    console.log(msg.message);
+                }
+            }
+        });
+    });
+
 
 
     function formToJson(formData){
