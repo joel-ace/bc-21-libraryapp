@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 var session = require('express-session');
 
 var app = express();
-var port = 4000;
+var port = 8000;
 
 //Sessions
 app.use(session({secret: "MyJSAppSecret", saveUninitialized: true, resave: true}));

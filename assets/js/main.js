@@ -69,7 +69,9 @@ $(document).ready(function(){
     	e.preventDefault();
 
     	$this = $(this);
-        var alertWrapper = $("#alertWrap");
+        var alertWrapper = $("#fontAwesomeSpinner");
+        alertWrapper.removeClass("hide").addClass("show");
+
         var data = formToJson($this);
         url = "/api/authenticate";
 
@@ -80,7 +82,7 @@ $(document).ready(function(){
             contentType: "application/json; charset=utf-8",
             success: function(msg) {
                 if(msg.success == true){
-                    console.log(msg.url);
+                    alertWrapper.show();
                     window.location = msg.url;
                 } else {
                     console.log(msg.message);
@@ -88,8 +90,6 @@ $(document).ready(function(){
             }
         });
     });
-
-
 
     function formToJson(formData){
         var formObject = formData.serializeArray();

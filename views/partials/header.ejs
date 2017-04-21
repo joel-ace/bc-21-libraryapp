@@ -22,10 +22,16 @@
     <div class="headertop">
       <div class="container">
         <div class="pull-right">
+          <% if(!Sess.SSuser){ %>
           <a href="/login">Login</a>
           <a href="/register">Register</a>
+          <% } %>
+          <% if(Sess.SSuser && Sess.SSaccount == "adminAccount"){ %>
           <a href="/admin/manage-books">Manage Books</a>
+          <% } %>
+          <% if(Sess.SSuser){ %>
           <a href="/logout">Logout</a>
+          <% } %>
         </div>
         <div class="clearfix"></div>
       </div>
