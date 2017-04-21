@@ -116,6 +116,10 @@ hr.e6 {
     padding-top: 2em;
     padding-bottom: 2em;
 }
+.content a {
+    text-decoration: none;
+    color: #fff;
+}
 
 .books {
     background: #009EDF;
@@ -130,7 +134,7 @@ hr.e6 {
 }
 .books .btn-success {
     background: #B6BF00;
-    border-color: #B6BF00000;
+    border-color: #B6BF00;
 }
 
 #footer {

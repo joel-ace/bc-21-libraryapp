@@ -7,7 +7,7 @@ var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library",
 // Add Book
 apiRouter.route("/add-book").post(function(request, response){
     var book = request.body;
-    if(!book.title || !book.status){
+    if(!book.title || !book.available){
         response.json({
             "error": "Enter Book title and availability status"
         })

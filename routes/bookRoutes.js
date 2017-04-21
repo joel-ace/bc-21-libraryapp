@@ -6,10 +6,10 @@ var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library",
 
 bookRouter.route("/").get(function(request, response){
     db.books.find({available: "1"}, function(error, books){
-        if(error){
+        if(!error){
+            response.render("books.ejs", {books: books.reverse()});
         // response.render("error.html");
         }
-        response.render("books.ejs", {books: books.reverse()});
     })
 });
 

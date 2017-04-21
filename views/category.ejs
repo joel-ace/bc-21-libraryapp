@@ -6,13 +6,15 @@
   </div>
   <div class="container">
     <div class="row content">
-    <% if(categories.length > 1) { %>
+    <% if(categories.length >= 1) { %>
       <% categories.forEach(function (category){ %>
       <div class="col-md-3">
-        <div class="books">
-          <h3><a href="/category/<%= category._id %>"><%= category.title %></a></h3>
-          <div class="clearfix"></div>
-        </div>
+        <a href="/category/<%= category._id %>">
+          <div class="books">
+            <h3><%= category.title %></h3>
+            <div class="clearfix"></div>
+          </div>
+       </a>
       </div>
       <% }) %>
     <% } else { %>

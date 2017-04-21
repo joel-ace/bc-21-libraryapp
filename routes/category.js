@@ -18,7 +18,7 @@ categoryRouter.route("/:id").get(function(request, response){
         if(error){
         // response.render("error.html");
         }
-        response.json(categories);
+        response.render("books.ejs", {books: categories});
     })
 });
 
