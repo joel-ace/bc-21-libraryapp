@@ -40,6 +40,29 @@ $(document).ready(function(){
         });
     });
 
+    // Mark as Returned
+    var returnedBtn = $(".returned");
+    returnedBtn.click(function(e){
+    	e.preventDefault();
+    	$this = $(this);
+        var bookID = $this.data("return");
+        url = "/api/return-book/"+bookID;
+
+        $.ajax({
+            type: "PUT",
+            url: url,
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            success: function(msg) {
+                if(msg.length > 5 && msg == bookID){
+                    $this.fadeOut("slow", function(){
+                        $this.remove();
+                    });
+                }
+            }
+        });
+    });
+
 
 
     function formToJson(formData){
