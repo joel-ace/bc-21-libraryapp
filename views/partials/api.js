@@ -73,16 +73,15 @@ apiRouter.route("/add-book").post(function(request, response){
         } else {
             db.books.save(book, function(err, book){
                 if(err){
-                    response.json({
-                        success: false, 
-                        message: "Sorry, we couldn't add Book"
-                    })
-                } else {
-                    response.json({
-                        success: true, 
-                        message: "Book added Sucessfully"
-                    })
+                response.json({
+                    success: false, 
+                    message: "Sorry, we couldn't add Book"
+                })
                 }
+                response.json({
+                    success: true, 
+                    message: "Book added Sucessfully"
+                })
             })
         }
     }
@@ -132,14 +131,14 @@ apiRouter.route("/update-book/:id").put(function(request, response){
                         author: book.author, synopsis: book.synopsis, 
                         available: book.available}
                     }, {}, function(error, Book){
-                        response.json({
-                            success: true, 
-                            message: "Book updated Sucessfully"
-                        })
+                if(error){
+                // response.render("error.html");
+            }
+            response.send(request.params.id);
             })
         } else {
             response.json({
-                success: false, 
+                success: true, 
                 message: "This book doesn't exist"
             })
         }
@@ -153,22 +152,14 @@ apiRouter.route("/add-category").post(function(request, response){
         var category = request.body;
         if(!category.title){
             response.json({
-                success: false, 
-                message: "Enter Category Title"
+                "error": "Enter Category title"
             })
         } else {
             db.categories.save(category, function(err, category){
                 if(err){
-                    response.json({
-                        success: false, 
-                        message: "Couldn't add category"
-                    })
-                } else {
-                    response.json({
-                        success: true, 
-                        message: "Caregory added Sucessfully"
-                    })
+                    response.send(err);
                 }
+                response.send(category._id);
             })
         }
     }
@@ -184,18 +175,10 @@ apiRouter.route("/borrow-book/:id").put(function(request, response){
     // borrowBook.returnDate = now;
     db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: {borrow: borrowBook}}, {}, function(error, Book){
         if(error){
-            response.json({
-                success: false, 
-                message: "Seems there's a glitch in the system"
-            })
-        } else {
-            var msg = "Book has been Borrowed. This book will no longer be available. Remeber to return it on or before";
-            response.json({
-                success: true, 
-                message: msg
-            })
+        // response.render("error.html");
         }
     });
+    response.send(request.params.id);
 });
 
 // Return book
@@ -206,19 +189,13 @@ apiRouter.route("/return-book/:id").put(function(request, response){
         var now = new Date();
         now.setDate(now.getDate()+3);
 
+        // borrowBook.returnDate = now;
         db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: {borrow: borrowBook}}, {}, function(error, Book){
             if(error){
-                response.json({
-                    success: false, 
-                    message: "Seems there's a glitch in the system"
-                })
-            } else {
-                response.json({
-                    success: true, 
-                    message: "Book has been marked as returned"
-                })
+            // response.render("error.html");
             }
         });
+        response.send(request.params.id);
     }
 });
 
