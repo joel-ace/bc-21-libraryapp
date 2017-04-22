@@ -20,32 +20,6 @@ var alertWrapper = $("#alertWrap");
         catName = $("#category option[value=" + select +"]").text();
         hiddenField.val(catName);
     })
-
-    // editBook.submit(function(e){
-    //     console.log(hiddenField.val());
-    // 	e.preventDefault();
-    //     var editID = editBook.data("id");
-    //     $this = $(this);
-
-    //     var data = formToJson($this);
-
-    //     url = "/api/update-book/" + editID;
-
-    //     // $.ajax({
-    //     //     type: "POST",
-    //     //     url: url,
-    //     //     data: data,
-    //     //     contentType: "application/json; charset=utf-8",
-    //     //     success: function(msg) {
-    //     //         if(msg.success == true){
-    //     //             window.location = msg.url;
-    //     //         } else {
-    //     //             console.log(msg.message);
-    //     //         }
-    //     //     }
-    //     // });
-    // });
-
     sendRequest("/api/update-book/"+editID, editBook, "PUT");
 
     //Delete Book

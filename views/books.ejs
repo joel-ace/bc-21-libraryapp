@@ -15,8 +15,8 @@
           <h3><strong>Author:</strong> <%= arrayItem.author %></h3>
           <h3><strong>Category:</strong> <%= arrayItem.catName %></h3>
           <a class="btn btn-info pull-left" href="/books/<%= arrayItem._id %>">More</a>
-          <% if(Sess.SSuser && Sess.SSaccount == "adminAccount"){ %>
-          <% if(arrayItem.borrow < 1) { %>
+          <% if(Sess.SSuser && Sess.SSaccount == "user"){ %>
+          <% if(arrayItem.borrow < 1 && arrayItem.available == 1) { %>
           <button href="#" class="btn btn-success pull-right borrow" data-id="<%= arrayItem._id %>">Borrow</button>
           <% } %>
           <% } %>
