@@ -22,6 +22,9 @@
     <div class="headertop">
       <div class="container">
         <div class="pull-right">
+          <% if(Sess.SSuser){ %>
+          <a>Welcome <%= Sess.SSname %></a>
+          <% } %>
           <% if(!Sess.SSuser){ %>
           <a href="/login">Login</a>
           <a href="/login/register">Register</a>

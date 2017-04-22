@@ -105,6 +105,11 @@ apiRouter.route("/add-book").post(function(request, response){
                 }
             })
         }
+    } else {
+        response.json({
+            success: false, 
+            message: "You are not yet authenticated"
+        })
     }
 });
 
@@ -130,6 +135,11 @@ apiRouter.route("/delete-book/:id").delete(function(request, response){
                 message: "Book doesn't exist"
             })
         }
+    } else {
+        response.json({
+            success: false, 
+            message: "You are not yet authenticated"
+        })
     }
 });
 
@@ -167,6 +177,11 @@ apiRouter.route("/update-book/:id").put(function(request, response){
                 message: "This book doesn't exist"
             })
         }
+    } else {
+        response.json({
+            success: false, 
+            message: "You are not yet authenticated"
+        })
     }
 
 });
@@ -195,6 +210,11 @@ apiRouter.route("/add-category").post(function(request, response){
                 }
             })
         }
+    } else {
+        response.json({
+            success: false, 
+            message: "You are not yet authenticated"
+        })
     }
 });
 
@@ -202,18 +222,26 @@ apiRouter.route("/add-category").post(function(request, response){
 apiRouter.route("/borrow-book/:id").put(function(request, response){
     var book = request.body;
     var borrowBook = 1;
-    var now = new Date();
-    now.setDate(now.getDate()+3);
-    returnDate = now;
+    var exp = new Date();
+    exp.setDate(exp.getDate()+3);
 
-    db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: {borrow: borrowBook}}, {}, function(error, Book){
+    var now = new Date();    
+
+    db.books.update({_id: mongojs.ObjectId(request.params.id)}, 
+    {$set: 
+        {
+            borrow: borrowBook,
+            returnDate: exp, 
+            borrowedUser: request.session.user
+        }
+    }, {}, function(error, Book){
         if(error){
             response.json({
                 success: false, 
                 message: "Seems there's a glitch in the system"
             })
         } else {
-            var msg = "Book Borrowed sucessfully. Return it on or before " + returnDate + " else you'll be surcharged";
+            var msg = "Book Borrowed sucessfully. Return it on or before " + exp + " else you'll be surcharged";
             response.json({
                 success: true, 
                 message: msg
@@ -227,10 +255,16 @@ apiRouter.route("/return-book/:id").put(function(request, response){
     if(request.session.account == "adminAccount"){
         var book = request.body;
         var borrowBook = 0;
-        var now = new Date();
-        now.setDate(now.getDate()+3);
 
-        db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: { borrow: borrowBook }}, {}, function(error, Book){
+        db.books.update({_id: mongojs.ObjectId(request.params.id)}, 
+        {$set: 
+            { 
+                borrow: borrowBook, 
+                returnDate: "", 
+                borrowedUser: "" 
+            }
+        }, {}, function(error, Book){
+
             if(error){
                 response.json({
                     success: false, 
@@ -243,6 +277,11 @@ apiRouter.route("/return-book/:id").put(function(request, response){
                 })
             }
         });
+    } else {
+        response.json({
+            success: false, 
+            message: "You are not yet authenticated"
+        })
     }
 });
 
