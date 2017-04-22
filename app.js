@@ -16,7 +16,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 
-var index = require("./routes/index");
 var books = require("./routes/bookRoutes");
 var adminRoute = require("./routes/adminRoutes");
 var category = require("./routes/category");

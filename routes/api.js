@@ -3,6 +3,7 @@ var apiRouter = express.Router();
 var mongojs = require("mongojs");
 var jsonwebtoken = require("jsonwebtoken");
 var logic = require("../functions");
+var bcrypt = require('bcrypt');
 
 var secret = "myfirstjavascriptappever";
 
@@ -13,23 +14,33 @@ apiRouter.route("/authenticate").post(function(request, response){
     db.users.findOne({email: request.body.email}, function(error, User){
         if(!error){
             if(!User){
-                response.json({success: false, message: "Failed! User doesn't not exist."})
-            } else if(User.password != request.body.password) {
-                response.json({success: false, message: "This password is incorrect."})
-            } else {
-                request.session.user = User._id;
-                request.session.name = User.name;
-                request.session.account = User.admin;
-                if(User.admin == "adminAccount"){
-                    var url = "/admin/manage-books";
-                } else {
-                    var url = "/books";
-                }
                 response.json({
-                    success: true, 
-                    message: "Login Successful! You will be redirected soon",
-                    url: url
+                    success: false, 
+                    message: "We couldn't find any user with the details you provided",
                 });                
+            } else {
+                bcrypt.compare(request.body.password, User.password, function(err, res) {
+                    if(res == true){
+                        request.session.user = User._id;
+                        request.session.name = User.name;
+                        request.session.account = User.admin;
+                        if(User.admin == "adminAccount"){
+                            var url = "/admin/manage-books";
+                        } else {
+                            var url = "/books";
+                        }
+                        response.json({
+                            success: true, 
+                            message: "Login Successful! You will be redirected soon",
+                            url: url
+                        });                
+                    } else {
+                        response.json({
+                            success: false, 
+                            message: "This password is incorrect",
+                        });                
+                    }
+                });
             }
         }
     });
@@ -45,20 +56,28 @@ apiRouter.route("/add-user").post(function(request, response){
             message: "Your Name, Email and Password is required",
         })
     } else {
-        db.users.save(user, function(err, User){
-            if(err){
-                response.json({
-                    success: false, 
-                    message: "Seems there's a glitch, Please try again later",
-                });    
-            } else {
-                response.json({
-                    success: true, 
-                    message: "Registration Successful! You will be redirected soon",
-                    url: "/login"
-                });    
-            }            
-        })
+        
+        //encrypt the user password
+        bcrypt.hash(user.password, 10, function(err, hash) {
+            user.password = hash;
+
+            db.users.save(user, function(error, User){
+                if(error){
+                    response.json({
+                        success: false, 
+                        message: "Seems there's a glitch, Please try again later",
+                    });    
+                } else {
+                    response.json({
+                        success: true, 
+                        message: "Registration Successful! You will be redirected soon",
+                        url: "/login"
+                    });    
+                }            
+            })
+        });
+
+
     }
 });
 
