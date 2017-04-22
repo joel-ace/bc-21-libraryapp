@@ -14,6 +14,7 @@
                             <td><strong>Category</strong></td>
                             <td><strong>Availability</strong></td>
                             <td></td>
+                            <td></td>
                         </tr>
                         <% books.forEach(function (bookDetails){ %>
                         <tr id="<%= bookDetails._id %>">
@@ -28,8 +29,13 @@
                                 <% } %>
                             </td>
                             <td>
-                                <form id="deleteBook" data-id="<%= bookDetails._id %>">
-                                    <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                                <% if(bookDetails.borrow == 1) { %>
+                                    <button data-return="<%= bookDetails._id %>" class="btn btn-xs btn-info returned" >Mark as Returned</button>
+                                <% } %>
+                            </td>
+                            <td>
+                                <form action="" >
+                                    <input type="submit" data-id="<%= bookDetails._id %>" class="btn btn-xs btn-danger deleteBook" value="Delete">
                                 </form>
                             </td>
                         </tr>

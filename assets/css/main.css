@@ -75,6 +75,13 @@ hr.e6 {
     color: #fff;
 }
 
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
+
 .headertop a {
     padding: 0 10px;
     border-right: 1px solid #fff;
@@ -116,7 +123,13 @@ hr.e6 {
     padding-top: 2em;
     padding-bottom: 2em;
 }
-
+.content a {
+    text-decoration: none;
+    color: #fff;
+}
+.mainCont {
+    margin-bottom: 40px;
+}
 .books {
     background: #009EDF;
     color: #fff;
@@ -130,10 +143,13 @@ hr.e6 {
 }
 .books .btn-success {
     background: #B6BF00;
-    border-color: #B6BF00000;
+    border-color: #B6BF00;
 }
 
 #footer {
     text-align: center;
     border-top: 3px solid #009EDF;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
 }

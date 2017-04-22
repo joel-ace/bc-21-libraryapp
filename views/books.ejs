@@ -1,29 +1,31 @@
 <%- include partials/header.ejs %>
   <div class="page_title">
     <div class="container">
-      <h2>Books</h2>
+      <h2><%= pgTitle %></h2>
     </div>
   </div>
   <div class="container">
     <div class="row content">
-    <% if(books.length > 1) { %>
+      <div id="alertWrap"></div>
+    <% if(books.length >= 1) { %>
       <% books.forEach(function (arrayItem){ %>
       <div class="col-md-4">
         <div class="books">
           <h3><strong>Title:</strong> <%= arrayItem.title %></h3>
           <h3><strong>Author:</strong> <%= arrayItem.author %></h3>
-          <h3><strong>Rental Fee:</strong> <%= arrayItem.fee %></h3>
           <h3><strong>Category:</strong> <%= arrayItem.category %></h3>
           <a class="btn btn-info pull-left" href="/books/<%= arrayItem._id %>">More</a>
+          <% if(Sess.SSuser && Sess.SSaccount == "adminAccount"){ %>
           <% if(arrayItem.borrow < 1) { %>
           <button href="#" class="btn btn-success pull-right borrow" data-id="<%= arrayItem._id %>">Borrow</button>
+          <% } %>
           <% } %>
           <div class="clearfix"></div>
         </div>
       </div>
       <% }) %>
     <% } else { %>
-      <div class="alert alert-info">No Books Founds</div>
+      <div class="alert alert-info">No Book Found</div>
     <% } %>
       <div class="clearfix"></div>
 

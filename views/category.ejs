@@ -1,11 +1,28 @@
 <%- include partials/header.ejs %>
   <div class="page_title">
     <div class="container">
-      <h2><%= book.title %></h2>
+      <h2>Book Categories</h2>
     </div>
   </div>
   <div class="container">
-      <h3><strong>Rental Fee:</strong> <%= book.fee %></h3>
-      <h3><strong>Rental Fee:</strong> <%= book.fee %></h3>
+    <div class="row content">
+    <% if(categories.length >= 1) { %>
+      <% categories.forEach(function (category){ %>
+      <div class="col-md-3">
+        <a href="/category/<%= category._id %>">
+          <div class="books">
+            <h3><%= category.title %></h3>
+            <div class="clearfix"></div>
+          </div>
+       </a>
+      </div>
+      <% }) %>
+    <% } else { %>
+      <div class="alert alert-info">No Category Found</div>
+    <% } %>
+      <div class="clearfix"></div>
+
+
+    </div>
   </div>
 <%- include partials/footer.ejs %>

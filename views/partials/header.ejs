@@ -7,6 +7,7 @@
 <title>Library App</title>
 <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet"> 
 <link href="https://fonts.googleapis.com/css?family=Poppins:400,700" rel="stylesheet"> 
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 <link href="/css/main.css" rel="stylesheet">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -21,22 +22,31 @@
     <div class="headertop">
       <div class="container">
         <div class="pull-right">
+          <% if(!Sess.SSuser){ %>
           <a href="/login">Login</a>
-          <a href="/register">Register</a>
+          <a href="/login/register">Register</a>
+          <% } %>
+          <% if(Sess.SSuser && Sess.SSaccount == "adminAccount"){ %>
+          <a href="/admin/manage-books">Manage Books</a>
+          <% } %>
+          <% if(Sess.SSuser){ %>
+          <a href="/logout">Logout</a>
+          <% } %>
         </div>
         <div class="clearfix"></div>
       </div>
     </div>
     <div class="navWrapper">
       <div class="container">
-        <div class="pull-left site_name"><h1><a href="#">LibraryApp</a></h1></div>
+        <div class="pull-left site_name"><h1><a href="/">LibraryApp</a></h1></div>
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span>Home</span> </a></li>
-            <li><a href="/books"><span>Books</span> </a></li>
+            <li><a href="/"><span>Home</span> </a></li>
+            <li><a href="/books"><span>All Books</span> </a></li>
+            <li><a href="/category"><span>Book Categories</span> </a></li>
           </ul>
         </div>
         <div class="clearfix"></div>
