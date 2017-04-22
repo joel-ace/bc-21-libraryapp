@@ -1,4 +1,7 @@
 $(document).ready(function(){
+  
+var alertWrapper = $("#alertWrap");
+  
     // Add Book
     var addBookForm = $("form#add-book");
     sendRequest("/api/add-book", addBookForm, "POST");
@@ -24,9 +27,34 @@ $(document).ready(function(){
     // sendRequest("/api/update-book/"+editID, editBook, "PUT");
 
     //Delete Book
-    var deleteBook = $("form#deleteBook");
-    var deleteID = deleteBook.data("id");
-    sendRequest("/api/delete-book/"+deleteID, deleteBook, "DELETE");
+    var deleteBook = $(".deleteBook");
+    // sendRequest("/api/delete-book/"+deleteID, deleteBook, "DELETE");
+    deleteBook.click(function(e){
+    	e.preventDefault();
+    	$this = $(this);
+        var deleteID = deleteBook.data("id");
+        url = "/api/delete-book/"+deleteID;
+        trRemove = "tr#" + deleteID;
+
+        $.ajax({
+            type: "DELETE",
+            url: url,
+            data: {},
+            contentType: "application/json; charset=utf-8",
+            success: function(msg) {
+                if(msg.success == true){
+                    if(alertWrapper.hasClass("alert")) {
+                        alertWrapper.attr("class","");
+                    }
+                    $(trRemove).fadeOut("fast", function(){
+                        $(trRemove).remove();
+                    });
+                    alertWrapper.addClass("alert alert-success").text(msg.message);
+                }
+            }
+        });
+    });
+
 
     // Borrow Book
     var borrowBtn = $(".borrow");
@@ -42,11 +70,17 @@ $(document).ready(function(){
             data: {},
             contentType: "application/json; charset=utf-8",
             success: function(msg) {
-                if(msg.length > 5 && msg == bookID){
+                if(msg.success == true){
+                    if(alertWrapper.hasClass("alert")) {
+                        alertWrapper.attr("class","");
+                    }
+                    alertWrapper.addClass("alert alert-success").text(msg.message);
                     $this.fadeOut("slow", function(){
                         $this.remove();
                     });
-                }
+                }  else {
+                    alertWrapper.addClass("alert alert-danger").text(msg.message);
+                }              
             }
         });
     });
@@ -65,10 +99,11 @@ $(document).ready(function(){
             data: {},
             contentType: "application/json; charset=utf-8",
             success: function(msg) {
-                if(msg.length > 5 && msg == bookID){
+                if(msg.success == true){
                     $this.fadeOut("slow", function(){
                         $this.remove();
                     });
+                    alertWrapper.addClass("alert alert-success").text(msg.message);
                 }
             }
         });
@@ -103,31 +138,7 @@ $(document).ready(function(){
 
     // Register
     var registerBtn = $("form#register");
-    registerBtn.submit(function(e){
-    	e.preventDefault();
-
-    	$this = $(this);
-        var alertWrapper = $("#fontAwesomeSpinner");
-        alertWrapper.removeClass("hide").addClass("show");
-
-        var data = formToJson($this);
-        url = "/api/add-user";
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: data,
-            contentType: "application/json; charset=utf-8",
-            success: function(msg) {
-                alertWrapper.removeClass("show").addClass("hide");
-                if(msg.success == true){
-                    window.location = msg.url;
-                } else {
-                    console.log(msg.message);
-                }
-            }
-        });
-    });
+    sendRequest("/api/add-user", registerBtn, "POST");
 
     function formToJson(formData){
         var formObject = formData.serializeArray();
@@ -140,9 +151,9 @@ $(document).ready(function(){
 
     function sendRequest(url, form, method){
         form.submit(function(e){
+            $this = $(this)
             e.preventDefault();
             var data = formToJson(form);
-            var alertWrapper = $("#alertWrap");
 
             // Send Post request
             $.ajax({
@@ -156,25 +167,34 @@ $(document).ready(function(){
                         alertWrapper.attr("class","");
                     }
                     // Check response and display alert
-                    if(msg && msg.length > 5){
-                        alertWrapper.addClass("alert alert-success").text("Successfully Added");
+                    if(msg.success == true){
+                        alertWrapper.addClass("alert alert-success").text(msg.message);
+                        if(msg.url){
+                            window.location = msg.url; 
+                        }
+
                         // Check if the form processed is the remove book form and remove the book entry from the dom
-                        if(form.attr("id") == "deleteBook") {
+                        if($this.attr("id") == "deleteBook") {
                             //get the table Id based on the url passed
                             remTableId = url.substr(url.lastIndexOf('/') + 1);
                             remTable = $('table.manageBooks tr#'+remTableId);
                             remTable.fadeOut("slow", function(){
                                 remTable.remove();
                             })
-                        } else if(form.attr("id") == "add-book" || form.attr("id") == "add-category") {
+                        } else if($this.attr("id") == "add-book" || $this.attr("id") == "add-category") {
                             // Clear all form inputs
-                            $(':input', form)
+                            $(':input', $this)
                             .not(':button, :submit, :reset, :hidden')
                             .val('')
                             .removeAttr('checked')
                             .removeAttr('selected');                        }
-                    } else {
-                        alertWrapper.addClass("alert alert-danger").text(msg.error);
+                    } else if(msg.success == false) {
+                        // Check if an div with class alert already exists in the dom and remove the class
+                        if(alertWrapper.hasClass("alert")) {
+                            alertWrapper.attr("class","");
+                        }
+                        
+                        alertWrapper.addClass("alert alert-danger").text(msg.message);
                     }
                 }
             });           

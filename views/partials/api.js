@@ -68,7 +68,8 @@ apiRouter.route("/add-book").post(function(request, response){
         var book = request.body;
         if(!book.title || !book.available){
             response.json({
-                "error": "Enter Book title and availability status"
+                success: false, 
+                message: "Enter Book title and availability status"
             })
         } else {
             db.books.save(book, function(err, book){

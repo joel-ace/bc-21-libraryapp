@@ -68,7 +68,8 @@ apiRouter.route("/add-book").post(function(request, response){
         var book = request.body;
         if(!book.title || !book.available){
             response.json({
-                "error": "Enter Book title and availability status"
+                success: false, 
+                message: "Enter book tile and book availablitity status"
             })
         } else {
             db.books.save(book, function(err, book){
@@ -180,8 +181,8 @@ apiRouter.route("/borrow-book/:id").put(function(request, response){
     var borrowBook = 1;
     var now = new Date();
     now.setDate(now.getDate()+3);
+    returnDate = now;
 
-    // borrowBook.returnDate = now;
     db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: {borrow: borrowBook}}, {}, function(error, Book){
         if(error){
             response.json({
@@ -189,7 +190,7 @@ apiRouter.route("/borrow-book/:id").put(function(request, response){
                 message: "Seems there's a glitch in the system"
             })
         } else {
-            var msg = "Book has been Borrowed. This book will no longer be available. Remeber to return it on or before";
+            var msg = "Book Borrowed sucessfully. Return it on or before " + returnDate + " else you be surcharged";
             response.json({
                 success: true, 
                 message: msg
