@@ -6,7 +6,7 @@ var bodyParser = require("body-parser");
 var session = require('express-session');
 
 var app = express();
-var port = 8000;
+app.set('port', process.env.PORT || 8000);
 
 //Sessions
 app.use(session({secret: "MyJSAppSecret", saveUninitialized: true, resave: true}));
@@ -60,7 +60,5 @@ app.get("/logout",function(request,response){
     });
 });
 
-app.listen(port, function () {
-  console.log("App running")
-})
+app.listen(port)
 
