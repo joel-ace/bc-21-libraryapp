@@ -1,8 +1,6 @@
 var express = require("express");
 var apiRouter = express.Router();
 var mongojs = require("mongojs");
-var jsonwebtoken = require("jsonwebtoken");
-var logic = require("../functions");
 var bcrypt = require('bcrypt');
 
 var secret = "myfirstjavascriptappever";

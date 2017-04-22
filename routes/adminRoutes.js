@@ -1,7 +1,6 @@
 var express = require("express");
 var adminRouter = express.Router();
 var mongojs = require("mongojs");
-var logic = require("../functions");
 
 var db = mongojs("mongodb://libUser:qwerty1234@ds031551.mlab.com:31551/library", ["books", "categories"]);
 

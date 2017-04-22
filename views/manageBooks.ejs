@@ -13,6 +13,7 @@
                             <td><strong>Author</strong></td>
                             <td><strong>Category</strong></td>
                             <td><strong>Availability</strong></td>
+                            <td><strong></strong></td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -26,6 +27,11 @@
                                     <span class="label label-success">Available</span>
                                 <% } else{ %>
                                     <span class="label label-danger">Unavailable</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <% var now = new Date(); if(now > bookDetails.returnDate){ %>
+                                    <button data-surcharge="<%= bookDetails.borrowedUser %>" class="btn btn-xs btn-info surcharge" >Surcharge User</button>
                                 <% } %>
                             </td>
                             <td>
