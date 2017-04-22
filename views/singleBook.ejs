@@ -10,13 +10,15 @@
         <h3><strong>Author:</strong> <%= book.author %></h3>
         <h3><strong>Category:</strong> <%= book.category %></h3>
         <p>
-          <% if(book.available == true) { %>
+          <% if(book.borrow == 0 && book.available == 1) { %>
             <span class="label label-success">Available</span>
           <% } else { %>  
             <span class="label label-danger">Unavailable</span>
           <% } %>
         </p><hr />
+          <% if(book.borrow == 0 && book.available == 1) { %>
           <button href="#" class="btn btn-success borrow" data-id="<%= book._id %>">Borrow</button>
+          <% } %>
       </div>
       <div class="col-md-8">
         <h3><strong>Synopsis:</strong></h3>
