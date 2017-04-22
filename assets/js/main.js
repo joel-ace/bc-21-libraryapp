@@ -152,7 +152,7 @@ var alertWrapper = $("#alertWrap");
                 if(msg.success == true){
                     window.location = msg.url;
                 } else {
-                    console.log(msg.message);
+                    alertWrapper.addClass("alert alert-danger").text(msg.message);
                 }
             }
         });
@@ -176,8 +176,6 @@ var alertWrapper = $("#alertWrap");
             $this = $(this)
             e.preventDefault();
             var data = formToJson(form);
-
-            console.log(data);
 
             // Send Post request
             $.ajax({
