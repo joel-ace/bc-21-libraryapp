@@ -123,15 +123,19 @@ apiRouter.route("/update-book/:id").put(function(request, response){
         if(book){
             updateBook.title = book.title,
             updateBook.category = book.category,
+            updateBook.catName = book.catName,
             updateBook.author = book.author,
             updateBook.synopsis = book.synopsis,
+            updateBook.borrow = book.borrow,
             updateBook.available = book.available
 
             db.books.update({_id: mongojs.ObjectId(request.params.id)}, 
-                    {$set: 
-                        {title: book.title, category: book.category, 
-                        author: book.author, synopsis: book.synopsis, 
-                        available: book.available}
+                    {$set: {
+                            title: book.title, category: book.category, 
+                            author: book.author, synopsis: book.synopsis, 
+                            available: book.available, borrow: book.borrow, 
+                            catName: book.catName
+                            }
                     }, {}, function(error, Book){
                         response.json({
                             success: true, 
@@ -207,7 +211,7 @@ apiRouter.route("/return-book/:id").put(function(request, response){
         var now = new Date();
         now.setDate(now.getDate()+3);
 
-        db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: {borrow: borrowBook}}, {}, function(error, Book){
+        db.books.update({_id: mongojs.ObjectId(request.params.id)}, {$set: { borrow: borrowBook }}, {}, function(error, Book){
             if(error){
                 response.json({
                     success: false, 
