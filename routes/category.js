@@ -29,15 +29,19 @@ categoryRouter.route("/:id").get(function(request, response){
         SSaccount: request.session.account
     }
 
-    db.books.find({category: request.params.id}, function(error, categories){
-        var bookCategory = request.params.id;
-        if(!error){
-            response.render("books.ejs", { 
-                books: categories, 
-                pgTitle: bookCategory + " Books",
-                Sess: Sess 
-            });
-        }
+    var catTitle;
+
+    db.books.find({category: request.params.id}, function(error, books){
+
+        db.categories.findOne({_id: mongojs.ObjectId(request.params.id)}, function(error, category){
+            if(!error){
+                response.render("books.ejs", { 
+                    books: books, 
+                    pgTitle: "Books on " + category.title,
+                    Sess: Sess 
+                });
+            }
+        })
     })
 });
 

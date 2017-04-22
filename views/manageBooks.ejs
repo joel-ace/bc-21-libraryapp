@@ -20,7 +20,7 @@
                         <tr id="<%= bookDetails._id %>">
                             <td><a href="/admin/book/<%= bookDetails._id %>"> <%= bookDetails.title %><a/></td>
                             <td><%= bookDetails.author %></td>
-                            <td><%= bookDetails.category %></td>
+                            <td><%= bookDetails.catName %></td>
                             <td>
                                 <% if(bookDetails.available == 1){ %>
                                     <span class="label label-success">Available</span>
