@@ -8,7 +8,7 @@
     <div class="row content">
       <div class="col-md-4">
         <h3><strong>Author:</strong> <%= book.author %></h3>
-        <h3><strong>Category:</strong> <%= book.category %></h3>
+        <h3><strong>Category:</strong> <%= book.catName %></h3>
         <p>
           <% if(book.borrow == 0 && book.available == 1) { %>
             <span class="label label-success">Available</span>
