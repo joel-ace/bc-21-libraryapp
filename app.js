@@ -60,5 +60,5 @@ app.get("/logout",function(request,response){
     });
 });
 
-app.listen(port)
+app.listen(port);
 
