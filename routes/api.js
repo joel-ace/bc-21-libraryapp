@@ -190,7 +190,7 @@ apiRouter.route("/borrow-book/:id").put(function(request, response){
                 message: "Seems there's a glitch in the system"
             })
         } else {
-            var msg = "Book Borrowed sucessfully. Return it on or before " + returnDate + " else you be surcharged";
+            var msg = "Book Borrowed sucessfully. Return it on or before " + returnDate + " else you'll be surcharged";
             response.json({
                 success: true, 
                 message: msg
